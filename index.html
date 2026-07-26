@@ -1,35 +1,176 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>UNKNOWN TERMINAL</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Beast Is Coming</title>
+
 <style>
-body{margin:0;overflow:hidden;background:#000;color:#fff;font-family:Consolas,monospace;display:flex;justify-content:center;align-items:center;height:100vh;animation:bg .2s infinite}
-@keyframes bg{0%{background:#000}20%{background:#202040}40%{background:#300}60%{background:#031}80%{background:#303}100%{background:#000}}
-#n{position:fixed;inset:0;background:repeating-linear-gradient(0deg,#0000 0 2px,#fff1 3px 4px);pointer-events:none;animation:j .08s infinite}
-@keyframes j{50%{transform:translate(2px,-2px)}}
-#box{text-align:center;animation:g .08s infinite}
-@keyframes g{50%{transform:translate(-2px,2px)}}
-h1{text-shadow:2px 0 red,-2px 0 cyan}
-input,button{padding:10px;font-size:18px}
-.msg{white-space:pre-line;font-size:1.6rem}
-</style></head><body><div id=n></div><div id=box>
-<h1 id=t>YOU ARE NOT THE CHOOSEN.</h1>
-<input id=p placeholder="PASSWORD"><br><br><button onclick="go()">ACCESS</button><div id=m></div></div>
-<script>
-let w=+localStorage.wrong||0;
-const end={
-"Shinui Constantine":()=>{document.body.style.animation="none";document.body.style.background="linear-gradient(#000,#4d3900,#cfa400,#fff2a8)";box.innerHTML='<div class=msg>Contigo, eu aprendi a Nadar.\n\nObrigado.</div>';},
-"Mariane":()=>{document.body.style.animation="none";document.body.style.background="linear-gradient(#140000,#5b0000,#990000,#300)";box.innerHTML='<div class=msg>Não importa quanto termos de mostrar,\n\nno final seremos quem estará lá.\n\nEsperando a Lua sangrar...\n\nE a Coroa me abençoar.</div>';shake();},
-"Audrey":()=>{document.body.style.animation="none";document.body.style.background="#111";let i=0;box.innerHTML='<div id=r class=msg></div>';setInterval(()=>{i++;r.innerHTML+=("Quebre o Ciclo. ").repeat(4)+"<br>";if(i>50)r.scrollTop=r.scrollHeight;},120);}
-};
-function shake(){setInterval(()=>document.body.style.transform=`translate(${Math.random()*8-4}px,${Math.random()*8-4}px)`,40)}
-function go(){
-let s=p.value.trim();
-if(end[s]){localStorage["end_"+s]=1;end[s]();return;}
-w++;localStorage.wrong=w;
-let arr=["INCORRECT.","STOP TRYING.","WHO SENT YOU?","...","I REMEMBER YOU."];
-let txt=arr[Math.min(arr.length-1,w-1)];
-m.innerHTML="<div class=msg>"+txt+"<br><br>SIGNAL LOST.</div>";
-document.body.style.animationDuration=".05s";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-if(localStorage["end_Shinui Constantine"]){t.textContent="WELCOME BACK.";setTimeout(()=>t.textContent="YOU ARE NOT THE CHOOSEN.",2500);}
-</script></body></html>
+
+body {
+    overflow: hidden;
+    background: black;
+    height: 100vh;
+    font-family: "Courier New", monospace;
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        background: #100000;
+    }
+    to {
+        background: #700000;
+    }
+}
+
+#screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.text {
+    position: absolute;
+    color: #ff0000;
+    font-weight: bold;
+    text-shadow:
+        0 0 5px red,
+        0 0 15px red,
+        0 0 30px darkred;
+
+    animation:
+        move 5s linear infinite,
+        glitch 0.15s infinite;
+}
+
+@keyframes move {
+    from {
+        transform: translateY(110vh) rotate(0deg);
+    }
+
+    to {
+        transform: translateY(-20vh) rotate(360deg);
+    }
+}
+
+@keyframes glitch {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+.flash {
+    position: fixed;
+    inset: 0;
+    background: red;
+    opacity: 0;
+    animation: flash 3s infinite;
+}
+
+@keyframes flash {
+    0%,80% {
+        opacity:0;
+    }
+    85% {
+        opacity:0.3;
+    }
+    100% {
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="screen"></div>
+<div class="flash"></div>
+
+<script>
+
+const phrases = [
+
+"The Beast is Coming",
+"The Devil is Here",
+"Mariane is the Culprit",
+"Shinui lies in his Golden Eyes",
+"The Apocalypse is Eternal",
+"The Red Moon is Watching",
+"There is No Salvation",
+"The Beast Has Awakened",
+"Everything Was A Lie",
+"Your Fate Was Written",
+"The End Has Already Begun",
+"Do Not Trust The Golden Eyes",
+"Mariane Knows The Truth",
+"Shinui Never Told The Truth",
+"The Devil Smiles Below",
+"The World Will Burn Again",
+"The Cycle Never Ends",
+"The Last Day Is Here",
+"Four Nights. Four Days. Eternal Blood.",
+"The Door Is Open",
+"Something Is Coming",
+"You Cannot Escape",
+"The Beast Remembers",
+"The Apocalypse Breathes",
+"All Secrets Will Be Revealed",
+"Death Is Only The Beginning",
+"The Sky Will Turn Red",
+"Repent Before The End",
+"He Is Already Here"
+
+];
+
+
+function createText(){
+
+    let text = document.createElement("div");
+
+    text.className = "text";
+
+    text.innerHTML =
+    phrases[Math.floor(Math.random()*phrases.length)];
+
+
+    text.style.left =
+    Math.random()*100 + "vw";
+
+    text.style.fontSize =
+    (15 + Math.random()*50) + "px";
+
+
+    text.style.animationDuration =
+    (3 + Math.random()*8) + "s";
+
+
+    text.style.color =
+    Math.random() > 0.5
+    ? "#ff0000"
+    : "#990000";
+
+
+    document.getElementById("screen")
+    .appendChild(text);
+
+
+    setTimeout(()=>{
+        text.remove();
+    },10000);
+
+}
+
+
+setInterval(createText,150);
+
+
+</script>
+
+</body>
+</html>
