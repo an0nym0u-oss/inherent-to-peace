@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UNKNOWN TERMINAL</title>
+<style>
+body{margin:0;overflow:hidden;background:#000;color:#fff;font-family:Consolas,monospace;display:flex;justify-content:center;align-items:center;height:100vh;animation:bg .2s infinite}
+@keyframes bg{0%{background:#000}20%{background:#202040}40%{background:#300}60%{background:#031}80%{background:#303}100%{background:#000}}
+#n{position:fixed;inset:0;background:repeating-linear-gradient(0deg,#0000 0 2px,#fff1 3px 4px);pointer-events:none;animation:j .08s infinite}
+@keyframes j{50%{transform:translate(2px,-2px)}}
+#box{text-align:center;animation:g .08s infinite}
+@keyframes g{50%{transform:translate(-2px,2px)}}
+h1{text-shadow:2px 0 red,-2px 0 cyan}
+input,button{padding:10px;font-size:18px}
+.msg{white-space:pre-line;font-size:1.6rem}
+</style></head><body><div id=n></div><div id=box>
+<h1 id=t>YOU ARE NOT THE CHOOSEN.</h1>
+<input id=p placeholder="PASSWORD"><br><br><button onclick="go()">ACCESS</button><div id=m></div></div>
+<script>
+let w=+localStorage.wrong||0;
+const end={
+"Shinui Constantine":()=>{document.body.style.animation="none";document.body.style.background="linear-gradient(#000,#4d3900,#cfa400,#fff2a8)";box.innerHTML='<div class=msg>Contigo, eu aprendi a Nadar.\n\nObrigado.</div>';},
+"Mariane":()=>{document.body.style.animation="none";document.body.style.background="linear-gradient(#140000,#5b0000,#990000,#300)";box.innerHTML='<div class=msg>Não importa quanto termos de mostrar,\n\nno final seremos quem estará lá.\n\nEsperando a Lua sangrar...\n\nE a Coroa me abençoar.</div>';shake();},
+"Audrey":()=>{document.body.style.animation="none";document.body.style.background="#111";let i=0;box.innerHTML='<div id=r class=msg></div>';setInterval(()=>{i++;r.innerHTML+=("Quebre o Ciclo. ").repeat(4)+"<br>";if(i>50)r.scrollTop=r.scrollHeight;},120);}
+};
+function shake(){setInterval(()=>document.body.style.transform=`translate(${Math.random()*8-4}px,${Math.random()*8-4}px)`,40)}
+function go(){
+let s=p.value.trim();
+if(end[s]){localStorage["end_"+s]=1;end[s]();return;}
+w++;localStorage.wrong=w;
+let arr=["INCORRECT.","STOP TRYING.","WHO SENT YOU?","...","I REMEMBER YOU."];
+let txt=arr[Math.min(arr.length-1,w-1)];
+m.innerHTML="<div class=msg>"+txt+"<br><br>SIGNAL LOST.</div>";
+document.body.style.animationDuration=".05s";
+}
+if(localStorage["end_Shinui Constantine"]){t.textContent="WELCOME BACK.";setTimeout(()=>t.textContent="YOU ARE NOT THE CHOOSEN.",2500);}
+</script></body></html>
